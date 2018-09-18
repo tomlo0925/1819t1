@@ -10,6 +10,7 @@ This course will introduce basic concepts in computer networking and network pro
 
 ## Announcement
 
+* 2018-09-18: Lecture 3 slides available
 * 2018-09-12: Lecture 2 slides available
 
 ---
@@ -25,8 +26,8 @@ This course will introduce basic concepts in computer networking and network pro
 ### Tutorials (IERG 4080)
 
 - **Teaching Assistant:** CHEN Kai [ck015@ie], ZHAO Tianyu [zt017@ie]
-- Time: TBC
-- Venue: TBC
+- Session 1: Wednesday 17:30 - 18:15 (SHB 833)
+- Session 2: Thursday 17:30 - 18:15 (SHB 728)
 
 ### Teaching Assistant (IEMS 5780)
 

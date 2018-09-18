@@ -21,9 +21,13 @@
 ### Lecture 03 (20 Sep)
 
 - Text Classification (1)
+- [Lecture slides](lectures/lecture-03.html), [PDF Version](lectures/pdfs/lecture-03.pdf)
+- Notebooks:
+    - [Text classification using logistic regression](notebooks/l3_text_logistic_regression.ipynb)
+    - [Text classification using naive Bayes classifier](notebooks/l3_text_naive_bayes.ipynb)
 - References:
     - [Working with Text Data - scikit-learn](http://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html)
-
+    - [Natural Language Processing with Python](http://nltk.org/book/)
 
 ### Lecture 04 (27 Sep)
 
