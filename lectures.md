@@ -25,6 +25,7 @@
 - Notebooks:
     - [Text classification using logistic regression](notebooks/l3_text_logistic_regression.ipynb)
     - [Text classification using naive Bayes classifier](notebooks/l3_text_naive_bayes.ipynb)
+    - [SMS Spam Classification](notebooks/l3-sms-spam-example.ipynb)
 - References:
     - [Working with Text Data - scikit-learn](http://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html)
     - [Natural Language Processing with Python](http://nltk.org/book/)
