@@ -2,7 +2,8 @@
 
 ## Text Classification and Telegram Bot
 
-* **Deadline**: 21st September, 2018 (Friday)
+* **Deadline**: 19th October, 2018 (Friday)
+* **Total Marks**: 100
 
 In this assignment, you will build a **text classifier** of movie reviews, and then deploy the text classifier as a **chatbot** on **Telegram** to allow other people to use it. The task you will be working on is a **binary classification** problem: given a movie review, determine if it is **positive** or **negative**.
 
@@ -45,7 +46,7 @@ What you will have to do:
 
 You should keep all the steps and results in the same Jupyter notebook for submission.
 
-### Task 2: Deploying Your Model as a Telegram Bot
+### Task 2: Deploying Your Model as a Telegram Bot (30 marks)
 
 Your next task is to deploy the selected model so that other people can use it. To skip the troubles of developing a UI for the application, you will deploy the models as a Telegram bot. Check the Telegram bot platform (https://telegram.org/blog/bot-revolution) and the Telegram Bot API (https://core.telegram.org/bots/api).
 

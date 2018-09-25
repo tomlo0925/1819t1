@@ -11,9 +11,9 @@
 
 ### Assignment 1
 
-- Text Classification
+- **Text Classification**
 - Due Date: 23:59, 19 Oct (Fri)
-- Instructions
+- [Instructions](assignments/assignment-1.md)
 
 ### Assignment 2
 
