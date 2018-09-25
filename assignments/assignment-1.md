@@ -49,11 +49,11 @@ You should keep all the steps and results in the same Jupyter notebook for submi
 
 ### Task 2: Deploying Your Model as a Telegram Bot (30 marks)
 
-Your next task is to deploy the selected model so that other people can use it. To skip the troubles of developing a UI for the application, you will deploy the models as a Telegram bot. Check the Telegram bot platform (https://telegram.org/blog/bot-revolution) and the Telegram Bot API (https://core.telegram.org/bots/api).
+Your next task is to deploy the selected model so that other people can use it. To skip the troubles of developing a UI for the application, you will deploy the models as a Telegram bot. Check the Telegram bot platform [https://telegram.org/blog/bot-revolution](https://telegram.org/blog/bot-revolution) and the Telegram Bot API [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api).
 
-Check also the Telepot framework for developing Telegram Bot in Python (https://github.com/nickoala/telepot).
+Check also the Telepot framework for developing Telegram Bot in Python [https://github.com/nickoala/telepot](https://github.com/nickoala/telepot).
 
-Firstly, you should create a Telegram bot by following the instructions at https://core.telegram.org/bots#3-how-do-i-create-a-bot. This bot will be used in latter assignments as well. If you are enrolled in IEMS5780, name your bot `iems5780-your_student_id`, if you are enrolled in IERG4080, name your bot `ierg4080-your_student_id`.
+Firstly, you should create a Telegram bot by following the instructions at https://core.telegram.org/bots#3-how-do-i-create-a-bot. This bot will be used in latter assignments as well. If you are enrolled in IEMS5780, name your bot **iems5780-your_student_id**, if you are enrolled in IERG4080, name your bot **ierg4080-your_student_id**.
 
 You can easily develop a program that continuously consumes messages from a user on Telegram, process the messages, and sends back responses to the user. Below is an example bot, which will simply echo what was sent by the user.
 
@@ -61,7 +61,6 @@ You can easily develop a program that continuously consumes messages from a user
 import time
 import telepot
 from telepot.loop import MessageLoop
-
 
 def handle(msg):
     """
@@ -74,7 +73,6 @@ def handle(msg):
         content = msg["text"]
         reply = "You said: {}".format(content)
         bot.sendMessage(chat_id, reply)
-
 
 if __name__ == "__main__":
     
