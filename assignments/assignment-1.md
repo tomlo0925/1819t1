@@ -38,6 +38,7 @@ What you will have to do:
     * By default, the vectorizers only extract **unigrams** as features. Repeat all experiments above but adding **bigram** features.
 5. **Using fastText** (15 marks) 
     * Instead of using scikit-learn, use Facebook's [fastText](https://github.com/facebookresearch/fastText) library (use the Python API)
+    * You can use the default values of the parameters when training a model
     * Train a fastText model using the same training set and compute metrics on the same test set as above.
 6. **Model Persistence** (5 marks)
     * Compare the accuracy scores of all the **scikit-learn models** you have built (you should have **8 models**)
