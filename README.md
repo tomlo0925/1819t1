@@ -10,6 +10,8 @@ This course will introduce basic concepts in computer networking and network pro
 
 ## Announcement
 
+* Tutorial 1 slides available
+* Now all tutorial sessions will be held in SHB 833
 * 2018-09-18: Lecture 3 slides available
 * 2018-09-12: Lecture 2 slides available
 
@@ -27,7 +29,7 @@ This course will introduce basic concepts in computer networking and network pro
 
 - **Teaching Assistant:** CHEN Kai [ck015@ie], ZHAO Tianyu [zt017@ie]
 - Session 1: Wednesday 17:30 - 18:15 (SHB 833)
-- Session 2: Thursday 17:30 - 18:15 (SHB 728)
+- Session 2: Thursday 17:30 - 18:15 (SHB 833)
 
 ### Teaching Assistant (IEMS 5780)
 
