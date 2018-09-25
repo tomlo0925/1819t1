@@ -4,56 +4,58 @@
 
 * **Deadline**: 21st September, 2018 (Friday)
 
-In this assignment, you will build a text classifier of movie reviews, and then deploy the text classifier as a **chatbot** on **Telegram** to allow other people to use it.
+In this assignment, you will build a **text classifier** of movie reviews, and then deploy the text classifier as a **chatbot** on **Telegram** to allow other people to use it. The task you will be working on is a **binary classification** problem: given a movie review, determine if it is **positive** or **negative**.
 
-### Task 1 - Training a Text Classifier
+We will use a dataset of movie reviews collected from [IMDb](https://www.imdb.com/), which is a movie database where Internet users can leave their comments about movies. The dataset can be obtained from the following Webpage: [http://ai.stanford.edu/~amaas/data/sentiment/](http://ai.stanford.edu/~amaas/data/sentiment/).
 
-We will use a randomly selected subset of data prepared by Xiang Zhang, described in the paper “Character-level Convolutional Networks for Text Classification” (https://arxiv.org/abs/1509.01626).
+Some descriptions of the dataset:
+* User reviews of movies on IMDb
+* A review is either labelled as **positive** or **negative**
+* There are a total of 25,000 reviews grouped as a training set, and another 25,000 reviews grouped as a test set.
+* There are also some unlabelled data
+* Preprocessed data are also available in the compressed file
 
-The dataset contains 110,000 articles assigned to 1 of the 14 classes listed below.
-Company
-Educational Institution
-Artist
-Athlete
-Office Holder
-Mean Of Transportation
-Building
-Natural Place
-Village
-Animal
-Plant
-Album
-Film
-Written Work
+### Task 1: Text Classification (70 marks)
 
-You will have to submit a Jupyter notebook that shows your steps of training and evaluating the text classification model. The notebook should contain the following:
+You will have to submit a **Jupyter notebook** for this task, which shows all your steps for training and evaluating the text classification model.
 
-Build a Naive Bayes classifier
-Use the MultinomialNB class in scikit-learn
-Compare the performance of using the CountVectorizer vs. the TfidfVectorizer for feature extraction, using 5-fold cross validation
-Performance should be measured using accuracy_score
-Pick the better approach, split the dataset and use 70% as training set and 30% as test set, and train a new model
-Plot the confusion matrix and classification report of the new model’s performance on the test set
-Save the model using scikit-learn’s joblib module
-Build a fastText classifier
-Use the fastText library from Facebook
-Split the dataset and use 70% as training set and 30% as test set, and train a model
-Plot the confusion matrix and classification report of the new model’s performance on the test set
-Save the model using fastText’s save mechanism
-Answer the following questions
-Which two classes are most confusing for the two models you have built? (i.e the samples from these two classes are most likely to be wrongly classified into each other by the models)
-Given the models above, you can classify an input text into one of the 14 classes. If you are also required to predict whether the input text does not belong to any of the 14 classes, what would you do?
+What you will have to do:
 
-Task 2 - Deploy Your Model as a Telegram Bot
+1. **Data Preparation** (15 marks)
+    * Prepare a full dataset by **combining** all the training and test data found in the downloaded raw data (DO NOT use the preproessed data)
+    * Randomly split the full dataset into a training set with **70%** of the data, and a test set with **30%** of the data (hence, you will have **35,000** reviews for training, and **15,000** reviews for testing)
+    * Check that the ratio of positive to negative reviews is roughly **1:1** in both the training and test set
+2. **Using a Naive Bayes Classifier** (15 marks)
+    * Build a pipeline using scikit-learn's `CounterVectorizer` to **vectorize** the input data and train a **naive Bayes classifier** using the training data
+    * Compute the following metrics on the test set
+        - accuracy
+        - precision and recall of **both positve and negative reviews**
+    * Repeat the above but use the `TfidfVectorizer` instead
+3. **Using a Logistic Regression Classifier** (10 marks)
+    * Repeat the above experiments but use the `LogisticRegression` class in scikit-learn instead of a naive Bayes model
+4. **Adding Bi-grams** (10 marks)
+    * By default, the vectorizers only extract **unigrams** as features. Repeat all experiments above but adding **bigram** features.
+5. **Using fastText** (15 marks) 
+    * Instead of using scikit-learn, use Facebook's [fastText](https://github.com/facebookresearch/fastText) library (use the Python API)
+    * Train a fastText model using the same training set and compute metrics on the same test set as above.
+6. **Model Persistence** (5 marks)
+    * Compare the accuracy scores of all the **scikit-learn models** you have built (you should have **8 models**)
+    * Which model (e.g. which vectorizer + which classification model + with/without bigram) has the highest score?
+    * Save that model as a file named **model.pkl**
 
-By now you should have two models: 1) the MultinomialBN model, and 2) the fastText model. The next task is to deploy the models so that other people can use it. To skip the troubles of deploying a UI for the application, you will deploy the models as a Telegram bot.
+You should keep all the steps and results in the same Jupyter notebook for submission.
 
-Check the Telegram bot platform (https://telegram.org/blog/bot-revolution) and the Telegram Bot API (https://core.telegram.org/bots/api). Check also the Telepot framework for developing Telegram Bot in Python (https://github.com/nickoala/telepot).
+### Task 2: Deploying Your Model as a Telegram Bot
 
-Firstly, you should create a Telegram bot by following the instructions at https://core.telegram.org/bots#3-how-do-i-create-a-bot. This bot will be used in latter assignments as well.
+Your next task is to deploy the selected model so that other people can use it. To skip the troubles of developing a UI for the application, you will deploy the models as a Telegram bot. Check the Telegram bot platform (https://telegram.org/blog/bot-revolution) and the Telegram Bot API (https://core.telegram.org/bots/api).
+
+Check also the Telepot framework for developing Telegram Bot in Python (https://github.com/nickoala/telepot).
+
+Firstly, you should create a Telegram bot by following the instructions at https://core.telegram.org/bots#3-how-do-i-create-a-bot. This bot will be used in latter assignments as well. If you are enrolled in IEMS5780, name your bot `iems5780-your_student_id`, if you are enrolled in IERG4080, name your bot `ierg4080-your_student_id`.
 
 You can easily develop a program that continuously consumes messages from a user on Telegram, process the messages, and sends back responses to the user. Below is an example bot, which will simply echo what was sent by the user.
 
+```python
 import time
 import telepot
 from telepot.loop import MessageLoop
@@ -80,17 +82,31 @@ if __name__ == "__main__":
 
     while True:
         time.sleep(10)
+```
 
 Your bot should fulfil the following requirements:
-If the user sends a message that starts with “nb:”, then you should pass the rest of the message (by removing “nb:” from the input text) to the naive Bayes model to predict the category of the text, and send the category (e.g. “Company”) to the user
-If the user sends a message that starts with “ft:”, then you should pass the rest of the message (by removing “ft:” from the input text) to the fastText model to predict the category of the text, and send the category to the user
-If the user sends a message that neither starts with “nb:” or “ft:”, the bot should always reply with the following message: “Sends me a text message starts with either ‘nb:’ or ‘ft:’”.
-Your bot should load all the models into memory in advance, before answering any message from the user.
 
-What to Submit
+* Whenever it receives a message from a user, it should pass the message into the text classification model.
+* If the model predicts that it is positive, the bot should say **"This is a positive review!"**, otherwise the bot should say **"This is a negative review!"**.
+* At the end of the message, you should append also the **score of the positive class**, up to 2 decimal places
+* Your bot should NOT load the model inside the `handle` function. It should only be loaded once when the script is executed.
 
-You should prepare two files to be submitted for this assignment:
-assignment1_task1.ipynb: the Jupyter notebook in which you have done Task 1, including all the source codes, results and figures
-assignment1_task2.py: the script in which you implement the Telegram bot to perform text classification on user inputs
+Below is an example of inputs and outputs:
+
+```
+Input  : This is a wonderful movie!
+Output : This is a positive review! (0.89)
+
+Input  : I will not recommend this movie to my friends
+Output : This is a negative review! (0.23)
+```
+
+**Note:** You do not need to keep your script running for marking. We will execute the script to test if necessary. Make sure you have the telegram bot token written inside the source code.
+
+### What to Submit
+
+You should prepare **two files** to be submitted for this assignment:
+* **classifiers.ipynb**: the Jupyter notebook in which you have done Task 1, including all the source codes and results
+* **bot.py**: the script in which you implement the Telegram bot to perform text classification on user inputs
 
 You should put these two files in a folder named <student_id>_assignment1 (e.g. 12345678_assignment1), and compress it into a zip file (e.g. 12345678_assignment1.zip). Submit the compressed file to Blackboard.
