@@ -33,7 +33,9 @@
 ### Lecture 04 (27 Sep)
 
 - Text Classification (2)
+- [Lecture slides](lectures/lecture-04.html), [PDF Version](lectures/pdfs/lecture-04.pdf)
 - References:
+    - [Word2Vec Tutorail](https://rare-technologies.com/word2vec-tutorial/)
     - [Text Understanding from Scratch](https://arxiv.org/abs/1502.01710). Xiang Zhang, Yann LeCun. 2015.
     - [fasText](https://fasttext.cc/) by Facebook Research
 
