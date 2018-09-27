@@ -10,11 +10,12 @@ This course will introduce basic concepts in computer networking and network pro
 
 ## Announcement
 
-* Assignment 1 has been released
-* Tutorial 1 slides available
-* Now all tutorial sessions will be held in SHB 833
-* 2018-09-18: Lecture 3 slides available
-* 2018-09-12: Lecture 2 slides available
+* [2018-09-27] Lecture 4 slides available
+* [2018-09-26] Assignment 1 has been released
+* [2018-09-25] Tutorial 1 slides available
+* [2018-09-25] Now all tutorial sessions will be held in SHB 833
+* [2018-09-18] Lecture 3 slides available
+* [2018-09-12] Lecture 2 slides available
 
 ---
 
