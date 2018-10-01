@@ -5,8 +5,8 @@
 * Slides: [tutorial-01.pdf](tutorials/tutorial-01.pdf)
 
 ### Tutorial 2
-* 
-* 
+* Scikit-learn & Telepot
+* Slides: [tutorial-02.pdf](tutorials/tutorial-02.pdf)
 
 ### Tutorial 3
 * 
