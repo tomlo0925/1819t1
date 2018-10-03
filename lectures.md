@@ -43,7 +43,8 @@
 ### Lecture 05 (04 Oct)
 
 - Recommender Systems
-
+- [Lecture slides](lectures/lecture-05.html), [PDF Version](lectures/pdfs/lecture-05.pdf)
+- References:
 
 ### Lecture 06 (11 Oct)
 

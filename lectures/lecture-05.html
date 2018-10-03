@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IEMS 5780 / IERG 4080 - Lecture 5</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Assistant:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script>
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+</head>
+<body>
+    <textarea id="source">
+
+class: center, middle
+
+# IEMS 5780 / IERG 4080<br/>Building and Deploying Scalable<br/>Machine Learning Services
+
+### Lecture 5 - Recommender Systems
+
+#### Albert Au Yeung<br/>4th October, 2018
+
+---
+
+class: middle, center
+
+# Recommender Systems
+
+---
+
+# Agender
+
+### Recommender Systems
+
+* Introduction
+* Content-based Recommendation Systems
+* Collaborative Filtering
+    - User-based Neighbourhood Model
+    - Item-based Neighbourhood Model
+    - Matrix Factorization
+* Recommendation as Classification
+
+---
+
+# Recommender Systems
+
+* We make a lot of **decisions** every day
+    - Transportation
+    - Restaurant reservation
+    - Hotel reservation
+    - Music
+    - Movies
+* We usually rely on some **suggestions** or **recommendations**
+    - Family and friends
+    - Supervisors, teachers, seniors
+    - Experts
+    - The general public (word-of-mouth)
+
+---
+
+# Recommender Systems
+
+### What are the factors that affect our decisions?
+
+* Our own **preferences** (of the content, the characteristics, the price, etc.)
+* What do **most people like**? (which is the blockbuster movie recently?)
+* What do **people around us like**? (friends and family)
+* What do people **similar to us** like?
+
+---
+
+# Example: Mobile App User Demographics
+
+<center>
+    <img src="img/l5-app-demographics-1.png" width="75%"/>
+</center>
+
+Ref: [You Are What Apps You Use: Demographic Prediction Based on User's Apps](https://arxiv.org/abs/1603.00059)
+
+---
+
+# Example: Mobile App User Demographics
+
+<center>
+    <img src="img/l5-app-demographics-2.png" width="75%"/>
+</center>
+
+Ref: [You Are What Apps You Use: Demographic Prediction Based on User's Apps](https://arxiv.org/abs/1603.00059)
+
+---
+
+# Recommender Systems
+
+* There are **many** items out there for us to choose
+    - Tens of thousands of movies and song
+sf    - More than 1 million apps in the Android and iPhone app stores
+    - Millions of books published every year
+* We need more efficient way to **filter information**, and identify items **most relevant** to us
+* On the other hand, producers also want to **provide consumers things that they really want** (targetted marketing)
+
+---
+
+# Mobile Apps
+
+<center>
+    <img src="img/l5-mobile-apps-stats.png" width="60%"/>
+</center>
+
+([https://www.statista.com/statistics/266210/number-of-available-applications-in-the-google-play-store/](https://www.statista.com/statistics/266210/number-of-available-applications-in-the-google-play-store/))
+
+---
+
+# Movies
+
+<center>
+    <img src="img/l5-us-movies-stats.png" width="75%"/>
+</center>
+
+([https://stephenfollows.com/how-many-films-are-released-each-year/](https://stephenfollows.com/how-many-films-are-released-each-year/))
+
+---
+
+# Solution: Recommender Systems
+
+* Use **computers** and **algorithms** to process the huge amount of inforamtion and do the **filtering** for us
+* Analyse the **tastes** and **preferences** of different people
+* Analyse the **characteristics** of different items/products
+* Generate **personalized** recommendation based on users' **past activities** and **feedback**
+* Systems performing the above tasks are referred to as **recommender systems** / **recommendation systems**
+
+---
+
+class: split
+
+# Examples of Recommender Systems
+
+.column-left[
+<center>
+    <img src="img/l5-spotify-recommendations.png" width="110%"/>
+</center>
+]
+.column-right[
+- Music recommendation
+- Suggested connections in social networks
+- Recommended items in e-commerce Websites
+- Recommended travel destinations and accommodations
+- ...
+]
+
+---
+
+# Common Strategies
+
+* **Popularity**
+    - Recommend items most people like
+* **Item Similarity**
+    - Recommend **items that are similar** to what the user has already shown interest
+* **User Similarity**
+    - Recommend items that are preferred by **users who are similar the the target user** in some ways
+* **Diversity**
+    - Recommend items that are **least known** to the uuser
+
+---
+
+# The Long Tail
+
+<center>
+    <img src="img/l5-long-tail.png" width="65%"/>
+</center>
+
+[https://www.forbes.com/sites/robinlewis/2016/05/31/the-long-tail-theory-can-be-reality-for-traditional-megabrands/#2b77afbc6372](https://www.forbes.com/sites/robinlewis/2016/05/31/the-long-tail-theory-can-be-reality-for-traditional-megabrands/#2b77afbc6372)
+
+---
+
+class: middle, center
+
+# Content-based Recommendation
+
+---
+
+# Content-based Recommendation
+
+* **Assumptions**
+    - Every user has his/her own **interests** / **tastes** / **preferences**
+    - Each user's preferences can be represented as **a summary of what he/she has seen/read/watched/liked in the past**
+    - A user will prefer something he or she is interested in
+* We can compare the **content** or **characteristics** of the items
+* Recommend items that are **similar** to what the user has consumed before
+
+---
+
+# Content-based Recommendation
+
+### Two Steps
+
+1. Learn user **preferences** (what does the user like?)
+2. Find items that **match** these preferences
+
+### Problems
+
+1. How do we **learn** user preferences?
+2. How do we **represent** user interests?
+3. How do we **represent** items?
+4. How to measure **similarity**?
+
+---
+
+# Content-based Recommendation
+
+### **Similarity-based**
+
+* **Steps**
+    - Define features to represent the items (e.g. bag-of-words, author, publish date/time, etc.)
+    - Construct **user profile** by the items liked by the user (e.g. average of feature vectors)
+    - Calculate **similarity** between user profile and the new items
+    - Return a **ranked list** of items
+* What is important here is the **user profile**
+    - How can we **represent** a user?
+    - A user may have **multiple interests**, or his/her interests may **change over time**
+
+---
+
+# Content-based Recommendation
+
+### Limitations of Content-based Methods
+
+* Content (including meta-data) might not be available or enough in some domains
+* It is difficult to represent some items by their 'content' (e.g. movies, books, music)
+* Content-based methods tend to return very similar items
+
+---
+
+class: center, middle
+
+# Collaborative Filtering
+
+---
+
+# Collaborative Filtering
+
+### What is Collaborative Filtering (CF)?
+
+* From [Wikipedia](https://en.wikipedia.org/wiki/Collaborative_filtering):<br/><br/>*In the newer, narrower sense, collaborative filtering is a method of making automatic predictions (filtering) about the interests of a user by collecting preferences or taste information from many users (collaborating). The underlying assumption of the collaborative filtering approach is that if a person A has the same opinion as a person B on an issue, A is more likely to have B's opinion on a different issue than that of a randomly chosen person.*
+
+---
+
+# Collaborative Filtering
+
+### Basic Idea
+
+* Instead of relying on the content of the items, we can analyse people’s **tastes and preferences**
+* Each person is NOT totally different from another
+* There are different **kinds** of people, for example:
+    - People who like action movies
+    - People who read literature
+    - People who like spicy food
+* By grouping **similar users**, we can recommend similar items to similar users
+* This does not require a lot of information about the users and items themselves
+
+---
+
+# Collaborative Filtering
+
+### Two Types of Collaborative Filtering
+
+1. **Memory-based**
+    - Directly use ratings from similar users or items
+    - Also called **neighbourhood-based** methods
+2. **Model-based**
+    - Mathematical models are used to represent users, items and their relations
+    - E.g. **matrix factorization**, Bayesian networks, probabilistic models
+
+---
+
+# Collaborative Filtering
+
+### User-item Interaction
+
+* In the following discussion, we assume that a user may **rate** an item on a **1 to 5** scale
+
+<center>
+    <img src="img/l5-user-item-matrix.png" width="60%"/>
+</center>
+
+
+---
+
+class: center, middle
+
+# Memory-based Collaborative Filtering
+
+---
+
+# Neighbourhood
+
+### What is neighbourhood?
+
+* Consider again the **vector space model**
+* Users and items can be represented as **vectors** in a high dimensional space
+* More similar items/users will appear **closer** to each other
+
+<center>
+    <img src="img/l5-neighbourhood.png" width="60%"/>
+</center>
+
+---
+
+# Neighbourhood Models
+
+### Two Types of Neighbourhood Models
+
+1. **User-based**
+    - We consider **similar users**
+    - The neighbourhood of a user consists of users who like similar items
+2. **Item-based**
+    - We consider **similar items**
+    - The neighbourhood of an item consists of items that are preferred by similar users
+
+---
+
+# User-based Collaborative Filtering
+
+* **Task**: Predict the **extent** to which user `\(u\)` likes item `\(i\)`
+* **Procedures**:
+    - We have user `\(u\)`, and item `\(i\)`
+    - Find a set of users who are similar to `\(u\)` and have rated `\(i\)`
+    - Get the **average rating** on `\(i\)` given by this set of users
+    - Do this for all items, come up with a **ranking** based on the predict rating
+
+---
+
+# User-based Collaborative Filtering
+
+* In doing **user-based CF**, we made the following **assumptions**:
+    - If users had similar tastes in the past, they should have similar tastes in the future
+    - User preferences remain **stable and consistent** over time
+* Furthermore, we need to define **similarity**
+* **Similarity**
+    - Should reflect how **close** the tastes and preferences of two users are
+    - Similar users should assign **similar ratings** to the same set of items
+
+---
+
+# Similarity - Pearson Correlation
+
+* One way of computing similarity between two users is to use the **pearson correlation**
+
+<center>
+    <img src="img/l5-pearson-correlation.png" width="70%"/>
+</center>
+
+---
+
+# Similarity - Pearson Correlation
+
+* `\(x\)`, `\(y\)`: users
+* `\(r_{x,i}\)`: rating assigned to `\(i\)` by `\(x\)`
+* `\(I\)`: the set of items rated by both `\(x\)` and `\(y\)`
+* `\(\text{sim}(x, y)\)` has a value between -1 and 1
+
+<center>
+    <img src="img/l5-pearson-correlation-equation.png" width="60%"/>
+</center>
+
+---
+
+# Similarity - Pearson Correlation
+
+* In Python, you can easily compute the correlation using the
+`scipy` module's [pearsonr function](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html)
+
+```python
+>>> from scipy.stats import pearsonr
+>>> a = [5,2,1,4,3,1]
+>>> b = [1,5,4,2,1,2]
+>>> pearsonr(a,b)
+(-0.59628479399994383, 0.21157899460007421)
+>>>
+>>> a = [5,2,1,4,3,1]
+>>> b = [4,3,1,5,4,2]
+>>> pearsonr(a,b)
+(0.85978530414910515, 0.028111919656069226)
+>>>
+```
+
+---
+
+# Predicting Ratings
+
+* How to **predict** a user's rating for an item?
+* Use the equation below:<br/><br/>
+
+<center>
+    <img src="img/l5-user-based-prediction.png" width="80%"/>
+</center>
+
+* Example: see `l5-user-based-cf.ipynb`
+
+---
+
+# Limitations
+
+* **Data sparsity**
+    - When there are a lot of users and items, very
+few overlap between users
+* **Does not scale**
+    - When there are 10 million users, how can
+you generate all their neighbourhoods?
+* Two users may have similar taste in one domain but very
+different taste in another
+
+---
+
+# Item-based Collaborative Filtering
+
+### Procedures
+
+* We have user `\(u\)` and item `\(i\)`
+* Find a set of **items**, which are
+    - rated by `\(u\)`
+    - given **similar ratings** as  `\(i\)` by other users
+* Get the **average rating** of this set of items given by `\(u\)`
+* Use that as the predicted rating of `\(i\)` by `\(u\)`
+
+---
+
+# Item-based Collaborative Filtering
+
+* In doing **item-based CF**, we made the following **assumptions**:
+    - If two items are given similar ratings by the users, they should have **similar characteristics**
+* Consider **movies**:
+    - Movies of the same genre, by the same director, or feature the same actor/actress will be assigned similar ratings
+* Ref: [Amazon.com Recommendations: Item-to-Item Collaborative Filtering](https://dl.acm.org/citation.cfm?id=642471)
+
+---
+
+# Predicting Ratings
+
+* One way to implement item-based CF is to compute a **weighted combination of ratings** given by `\(u\)` to other items
+
+<center>
+    <img src="img/l5-item-based-prediction.png" width="70%"/>
+</center>
+
+---
+
+# Neighbourhood-based Collaborative Filtering
+
+* Neighbourhood and recommended items are usually calculated **offline** 
+* In order to reduce the amount of computation needed, the size of the neighbourhood is usually **limited**
+* Previous research shows that a neighbourhood size of **20-50** is quite enough
+* Ref: [Empirical Analysis of Design Choices in Neighborhood-based Collaborative Filtering Algorithms](https://dl.acm.org/citation.cfm?id=594047), Herlocker et al., 2002.
+
+---
+
+class: center, middle
+
+# Food for Thought
+
+### TED Talk
+### How Algorithms Shape Our World
+#### TEDGlobal 2011, By Kevin Slavin
+[http://www.ted.com/talks/kevin_slavin_how_algorithms_shape_our_world.html](http://www.ted.com/talks/kevin_slavin_how_algorithms_shape_our_world.html)
+
+---
+
+class: center, middle
+
+# Model-based Collaborative Filtering
+
+---
+
+# Model-based Collaborative Filtering
+
+* What we have discussed so far are called **memory-based** collaborative filtering
+* We have not **trained** any model that can be used to describe the relationship between inputs and outputs
+* Memory-based models are **easy to implement**, but usually are NOT very accurate and NOT **scalable**
+* Instead, we can consider a **machine learning approach** to the task of recommendation:
+    - Create a model that explains how **ratings are generated**, or how **items are ranked**
+    - Use past data to **train/optimize** the parameters of the model
+
+---
+
+# Model-based Collaborative Filtering
+
+### We can roughly categorize model-based CF into two types:
+* **Matrix Factorization Approach**
+    - Assume that there are **latent factors** that determine how users rate items
+    - Decompose the user-item matrix using matrix factorization techniques
+* **Classification Approach**
+    - Consider the task of recommendation as a **classification** problem
+    - For each given pair of user and item, we determine whether the user will be interested in the item (binary classification)
+    - Can take into account **contextual information** and **implicit feedbacks**
+
+---
+
+class: middle, center
+
+# To be continued
+
+---
+
+
+class: center, middle
+
+# End of Lecture 5
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        ratio: '16:9',
+        
+        // Customize slide number label, either using a format string..
+        slideNumberFormat: '%current% / %total%',
+        
+        // Enable or disable counting of incremental slides in the slide counting
+        countIncrementalSlides: true,
+
+        highlightStyle: 'tomorrow',
+        });
+      // Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
