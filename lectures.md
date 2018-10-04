@@ -45,6 +45,8 @@
 - Recommender Systems
 - [Lecture slides](lectures/lecture-05.html), [PDF Version](lectures/pdfs/lecture-05.pdf)
 - References:
+    - [Google News Personalization: Scalable Online Collaborative Filtering](https://www2007.org/papers/paper570.pdf). Das et al., 2007.
+    - [Amazon.com Recommendations: Item-to-Item Collaborative Filtering](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf). Linden et al., 2003.
 
 ### Lecture 06 (11 Oct)
 
