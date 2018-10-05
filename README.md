@@ -36,7 +36,7 @@ This course will introduce basic concepts in computer networking and network pro
 
 ### Teaching Assistant (IEMS 5780)
 
-- **Teaching Assistant:** XU Xudong
+- **Teaching Assistant:** XU Xudong [xudongxu9710@gmail]
 
 ### Assessment Schemes
 
