@@ -8,6 +8,7 @@
     - Download the Jupyter notebook template from [https://drive.google.com/open?id=1Fnp6R1YplvwhIfo1YgyMX2_5Zp9l8fav](https://drive.google.com/open?id=1Fnp6R1YplvwhIfo1YgyMX2_5Zp9l8fav) or [here](assignments/iems5780_a0_template.ipynb)
     - Write your solutions in the notebook by running your own instance of Jupyter (or on Colaboratory if you want to)
     - When you have finished, submit the `.ipynb` file to Blackboard
+- [Solutions](assignments/assignment-0-solutions.md)
 
 ### Assignment 1
 
