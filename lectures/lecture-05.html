@@ -515,7 +515,427 @@ class: center, middle
 
 class: middle, center
 
-# To be continued
+# Gradient Descent
+
+---
+
+# Parameter Optimization
+
+* Training machine learning models usually means **optimizing parameters** in the model using the **training data**
+* Each model is characterized by a set of **parameters**
+* Consider linear regression as an example:
+
+$$y = b_0 + b_1 x_1 + b_2 x_2 + ... + b_n x_n$$
+
+* Each `\(b_i\)` is a parameter of the model
+* How exactly do we find the most suitable values of these parameters given the training data?
+
+---
+
+# Parameter Optimization
+
+* In some cases, we can find a solution **analytically**
+    - The solution can be represented by a equation
+    - The best parameters can be obtained by substituting the training data `\(X\)` and `\(y\)` into the equation
+* However, in many cases, the model is complicated and we cannot do that analytically
+* Another approach: **trial and error**
+    1. **Initialize** the paraemeters randomly
+    2. Use the model to **generate predictions** for the training data
+    3. Computer the **error** of the predictions
+    4. Use the error to **adjust** the parameters
+    5. Go to Step 1 if model is not good enough 
+
+---
+
+class: split
+
+# Gradient Descent
+
+.column-left[
+* Let's consider a very simple example
+* We want to learn a linear model `\(y = mx\)`
+* Our training data:
+    - `X = (1, 2, 3, 4)`
+    - `y = (2.4, 3.5, 5.5, 8.7)`
+* Obviously the value of `\(m\)` can be determined analytically
+* Let's try our **gradient descent** on this example
+]
+.column-right[
+<center>
+    <img src="img/l5-gd-example.png" width="90%"/>
+</center>
+]
+
+---
+
+# Gradient Descent
+
+* To perform gradient descent, we need to first have an **error function** that allows us to understand how much error we are making using current values of the parameters (also called **objective function** or **loss function**)
+* Our error function:
+
+$$
+error = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2
+$$
+
+$$
+= \frac{1}{N} \sum_{i=1}^N (y_i - m x_i)^2
+$$
+
+* where N is number of training samples
+* (note that we use the **mean squared error** in this case)
+
+---
+
+class: split
+
+# Gradient Descent
+
+.column-left[
+* The objective is to **adjust** the value of our parameter `\(m\)` such that next time the error will be **smaller**
+* By **adjusting** we mean either **increase** or **decrease** its value
+* To know to which direction we should adjust `\(m\)`, we need to know the **gradient** of the error
+* In our case:
+
+$$
+\frac{\partial e}{\partial m} = \frac{1}{N} \sum_{i=1}^N (-2 x_i y_i + 2 m x_i^2)
+$$
+]
+.column-right[
+<center>
+    <img src="img/l5-error-plot.png" width="90%"/>
+</center>
+]
+
+---
+
+class: split
+
+# Gradient Descent
+
+* Once we know the gradient, we know how to adjust `\(m\)`
+* If gradient is **positive**, we need to **reduce** `\(m\)`
+* If gradient is **negative**, we need to **increase** `\(m\)`
+* We use a **hyperparameter** called the **learning rate** to determine **how much** do we adjust `\(m\)` each time
+    - If we change the value too much, we may **miss** the optimal value
+    - If we cahnge the value too little, we may never arrive at the optimal value
+* Implementation in Python: `l5-gradient-descent-example.ipynb`
+
+---
+
+class: middle, center
+
+# Matrix Factorization
+
+---
+
+# Model-based Collaborative Filtering
+
+* Recall that in recommender systems, we usually deal with a matrix of **user-item ratings**
+* In **memory-based methods**, we directly compute a prediction based on the other ratings
+* In **model-based methods**, we come up with a **model** of how ratings are **generated**
+* **Matrix factorization** is a commonly used model-based methods in recommendations
+
+<center>
+    <img src="img/l5-user-item-matrix.png" width="50%"/>
+</center>
+
+---
+
+# Matrix Factorization - Basic Idea
+
+* We assume that users and items can be grouped into different **types**
+* Take **movies** as an example:
+    - Some users like action movies, while some like romantic movies
+    - Some movies are romantic, while some are exciting and full of suspense
+
+<center>
+    <img src="img/l5-user-item-types.png" width="70%"/>
+</center>
+
+---
+
+# Matrix Factorization
+
+### Challenge
+
+* How can we discover **types** of users and items from our data?
+* **Clustering**?
+
+<center>
+    <img src="img/l5-user-item-types-2.png" width="80%"/>
+</center>
+
+---
+
+# Matrix Factorization
+
+* Clustering users and items separately **does NOT** work well
+    - We need to **manually inspect** the meaning of each group
+(cluster)
+    - We do not know which user groups correspond to which
+item groups
+    - There is no guarantee that we will obtain exact
+**correspondence** between user groups and item groups
+    - E.g. there might be a group of users who like animations,
+but animations might be grouped under different clusters
+according to their content
+
+---
+
+# Matrix Factorization
+
+* We can approach this problem differently
+* Let's assume in advance that there are **`\(K\)` different types of users and items**
+* We use **vectors of length `\(K\)`** to represent users and items
+* Each component (**factor**) in a vector represents the **extent** to which the user/item **belongs to that type**<br/><br/>
+
+$$
+\text{user}_1 = (0.0, 0.1, 0.2, 1.2, 2.3) \\\
+\text{user}_2 = (3.1, 0.0, 0.1, 0.2, 0.4)
+$$
+
+$$
+\text{item}_1 = (0.2, 0.9, 1.5, 0.2, 0.8) \\\
+\text{item}_2 = (1.5, 2.3, 0.0, 0.9, 0.0)
+$$
+
+---
+
+# Matrix Factorization
+
+* If we consider all the **users** and **items** in our recommender system, we can represent all of them using two different **matrices**
+
+<center>
+    <img src="img/l5-user-item-matrices.png" width="80%"/>
+</center>
+
+---
+
+# Matrix Factorization
+
+* In such a model, the rating on item `\(i\)` given by user `\(u\)` is generated by computing the **dot product** of the corresponding user and item **vectors**
+* This is equivalent to multiplying the (transpose of) the item matrix with the user matrix
+
+<center>
+    <img src="img/l5-matrix-factorization.png" width="80%"/>
+</center>
+
+---
+
+# Matrix Factorization
+
+* Usually, we are given the matrix `\(R\)`, **matrix factorization** is the process of finding `\(P\)` and `\(Q\)` such that `\(P x Q^T\)` gives an approximation of `\(R\)`
+
+$$
+P \times Q^T = \hat{R} \approx R
+$$
+
+* Very often `\(R\)` is **incomplete** (e.g. 99% of the cells are empty),
+* Therefore, we have to estimate the values in `\(P\)` and `\(Q\)`, instead of solving for exact values
+• The number of factors `\(K\)` reflects the complexity of our
+model
+
+---
+
+class: split
+
+# Matrix Factorization
+
+.column-left[
+* In matrix factorization, our target is to come up with `\(P\)` and `\(Q\)`, the two **factor matrices** whose product approximates the user-item rating matrix `\(R\)`
+* When we say approximate, we are talking about the **known
+values** in `\(R\)`
+* If we can approximate the known values well, our **predictions** of the unknown values will be **accurate**
+]
+.column-right[
+<center>
+    <img src="img/l5-matrix-factorization-known-values.png" width="70%"/>
+</center>
+]
+
+---
+
+# Matrix Factorization
+
+* Let's focus on **one rating** at a time
+
+<center>
+    <img src="img/l5-matrix-factorization.png" width="70%"/>
+</center>
+
+$$
+\hat{r}\_{ui} = \sum\_{k=1}^K p\_{uk} q\_{ki}
+$$
+
+---
+
+# Matrix Factorization
+
+* Our goal is to find all `\(p_{ik}\)` and `\(q_{kj}\)` such that
+
+$$
+\sum\_{k=1}^K p\_{uk} q\_{ki} \approx r\_{ui}
+$$
+
+* Our data only contain the values of **some** `\(r_{ij}\)`
+* How can we determine the values of all `\(p_{ik}\)` and `\(q_{kj}\)`?
+
+---
+
+# Matrix Factorization
+
+### Basic Idea:
+
+* We first initialize `\(P\)` and `\(Q\)` with some **random values**
+* We measure our **error**, i.e. how far we are from the **true** values in R
+* We update the values in `\(P\)` and `\(Q\)` based on the error we computed
+* **Repeat** the steps above until the error is sufficiently small<br/><br/>
+* In other words, we can use **gradient descent**
+
+---
+
+# Matrix Factorization
+
+* Example:
+
+<center>
+    <img src="img/l5-matrix-factorization-example.png" width="70%"/>
+</center>
+
+* The **dot product** of the user vector and the item vector is:
+
+$$
+0.5 \times 1 + 1 \times 0 + 1.5 \times 2 = 3.5
+$$
+
+* We can then compute our **error**
+
+---
+
+# Matrix Factorization
+
+* Error is give by:
+
+$$
+e\_{ui} = r\_{ui} - \hat{r}\_{ui} = r\_{ui} - \sum\_{k=1}^K p\_{uk} q\_{ki}
+$$
+
+* Squared error:
+
+$$
+e\_{ui}^2 = (r\_{ui} - \hat{r}\_{ui})^2 = (r\_{ui} - \sum\_{k=1}^K p\_{uk} q\_{ki})^2
+$$
+
+* The **machine learning** problem here is to optimize all `\(p\)`'s and `\(q\)`'s such that `\(e_{ui}^2\)` is **minimized**
+
+---
+
+# Matrix Factorization
+
+### Gradient Descent
+
+$$
+e\_{ui}^2 = (r\_{ui} - \hat{r}\_{ui})^2 = (r\_{ui} - \sum\_{k=1}^K p\_{uk} q\_{ki})^2
+$$
+
+$$
+\frac{\partial e\_{ui}^2}{\partial p\_{uk}} = -2 (r\_{ui} - \sum\_{k=1}^K p\_{uk} q\_{ki}) q\_{ki} = -2 e\_{ui} q\_{ki}
+$$
+
+$$
+\frac{\partial e\_{ui}^2}{\partial q\_{ki}} = -2 (r\_{ui} - \sum\_{k=1}^K p\_{uk} q\_{ki}) p\_{uk} = -2 e\_{ui} p\_{uk}
+$$
+
+---
+
+# Matrix Factorization
+
+* Having obtained the gradients, we can construct our **update rules** as follows:
+
+<br/>
+$$
+p'\_{uk} = p\_{uk} - \alpha (-2 e\_{ui} q\_{ki}) = p\_{uk} + 2 \alpha e\_{ui} q\_{ki}
+$$
+<br/>
+
+$$
+q'\_{ki} = q\_{ki} - \alpha (-2 e\_{ui} p\_{uk}) = q\_{ki} + 2 \alpha e\_{ui} p\_{uk}
+$$
+<br/>
+
+* where `\(\alpha\)` is the **learning rate**
+* `\(p'_{uk}\)` and `\(q'_{ki}\)` are the **new values**
+
+---
+
+# Matrix Factorization
+
+### Training Data
+
+* Note that we only optimize `\(P\)` and `\(Q\)` using the **known values** in the matrix `\(R\)`
+* We can consider transforming the user-item rating matrix into a list of **tuples**:<br/>(user, item, rating):
+
+<center>
+    <img src="img/l5-matrix-factorization-training.png" width="55%"/>
+</center>
+
+---
+
+# Beyond Rating Predictions
+
+* In many other cases, we do NOT always have **ratings (explicit feedback)** from the users
+* Instead, we would have **implicit feedback** from the users on the items
+    - The user purchased an item
+    - The user clicked on an advertisement
+    - The user viewed the details of an item
+* Implicit feedbacks can also be considered as **(weaker) indications** that the user is interested in the items
+* We can still populate a user-item matrix using implicit feedbacks
+* Ref: [Collaborative Filtering for Implicit Feedback Datasets](http://yifanhu.net/PUB/cf.pdf) (Hu et al. 2008)
+
+---
+
+class: center, middle
+
+# Recommendation as Classification
+
+---
+
+# Recommendation as Classification
+
+* Besides rating prediction using matrix factorization, recommendation can also be considered as a **classification task**
+* Ultimately, we want to determine the **probability that a user is interested / likes / wants to purchase an item**
+* Besides the explicit/implicit feedbacks, there are actually a lot of things we can consider as **features**
+    - date/time when the users visit the Website
+    - the browsing history of the users
+    - the various characteristics of the items (e.g. actors/actresses in a movie, storyline of a fiction)
+    - Whether the user is using a PC or a smartphone
+    - **interactions** between user and item features
+
+---
+
+# Recommendation as Classification
+
+* Recommendation can be considered as a **binary classification** problem
+    - Whether the user will **click** on an advertisement
+    - Whether the user will **purchase** the item
+    - Whether the user will **download** the mobile app
+* **Common classification models** can be used
+    - Logistic regression
+    - Support vector machines
+    - Decision trees / Random forests
+* The most important things in this approach are the **features** --> **Feature Engineering**
+
+---
+
+# Recommendation as Classification
+
+* To train a classifier, you need both **positive** and **negative** samples
+* However, very often you don't know what the user **DOES NOT** like
+* A user hasn't interacted with an item DOES NOT mean that he/she is not interested in an item
+* **Negative sampling**
+    - For each positive feedback you have, **randomly sample** items that the user has not interacted with
+    - Use these items as **negative** samples
+    - Can also weight each sample differently (how?)
 
 ---
 

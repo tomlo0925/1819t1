@@ -44,6 +44,9 @@
 
 - Recommender Systems
 - [Lecture slides](lectures/lecture-05.html), [PDF Version](lectures/pdfs/lecture-05.pdf)
+- Notebooks:
+    - [User-based Collaborative Filtering](l5-user-based-cf.ipynb)
+    - [Gradient Descent Example](l5-gradient-descent-example.ipynb)
 - References:
     - [Google News Personalization: Scalable Online Collaborative Filtering](https://www2007.org/papers/paper570.pdf). Das et al., 2007.
     - [Amazon.com Recommendations: Item-to-Item Collaborative Filtering](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf). Linden et al., 2003.
