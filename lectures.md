@@ -23,9 +23,9 @@
 - Text Classification (1)
 - [Lecture slides](lectures/lecture-03.html), [PDF Version](lectures/pdfs/lecture-03.pdf)
 - Notebooks:
-    - [Text classification using logistic regression](notebooks/l3_text_logistic_regression.ipynb)
-    - [Text classification using naive Bayes classifier](notebooks/l3_text_naive_bayes.ipynb)
-    - [SMS Spam Classification](notebooks/l3-sms-spam-example.ipynb)
+    - [Text classification using logistic regression](https://github.com/iems5780/1819t1/blob/master/notebooks/l3_text_logistic_regression.ipynb)
+    - [Text classification using naive Bayes classifier](https://github.com/iems5780/1819t1/blob/master/notebooks/l3_text_naive_bayes.ipynb)
+    - [SMS Spam Classification](https://github.com/iems5780/1819t1/blob/master/notebooks/l3-sms-spam-example.ipynb)
 - References:
     - [Working with Text Data - scikit-learn](http://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html)
     - [Natural Language Processing with Python](http://nltk.org/book/)
@@ -45,8 +45,8 @@
 - Recommender Systems
 - [Lecture slides](lectures/lecture-05.html), [PDF Version](lectures/pdfs/lecture-05.pdf)
 - Notebooks:
-    - [User-based Collaborative Filtering](l5-user-based-cf.ipynb)
-    - [Gradient Descent Example](l5-gradient-descent-example.ipynb)
+    - [User-based Collaborative Filtering](https://github.com/iems5780/1819t1/blob/master/notebooks/l5-user-based-cf.ipynb)
+    - [Gradient Descent Example](https://github.com/iems5780/1819t1/blob/master/notebooks/l5-gradient-descent-example.ipynb)
 - References:
     - [Google News Personalization: Scalable Online Collaborative Filtering](https://www2007.org/papers/paper570.pdf). Das et al., 2007.
     - [Amazon.com Recommendations: Item-to-Item Collaborative Filtering](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf). Linden et al., 2003.
@@ -54,7 +54,11 @@
 ### Lecture 06 (11 Oct)
 
 - Image Classification
-
+- [Lecture slides](lectures/lecture-06.html), [PDF Version](lectures/pdfs/lecture-06.pdf)
+- Notebooks:
+    - 
+- References:
+    -
 
 ### Lecture 07 (18 Oct)
 
