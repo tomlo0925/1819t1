@@ -55,10 +55,6 @@
 
 - Image Classification
 - [Lecture slides](lectures/lecture-06.html), [PDF Version](lectures/pdfs/lecture-06.pdf)
-- Notebooks:
-    - 
-- References:
-    -
 
 ### Lecture 07 (18 Oct)
 

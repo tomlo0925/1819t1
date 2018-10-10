@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IEMS 5780 / IERG 4080 - Lecture 6</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Assistant:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script>
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+</head>
+<body>
+    <textarea id="source">
+
+class: center, middle
+
+# IEMS 5780 / IERG 4080<br/>Building and Deploying Scalable<br/>Machine Learning Services
+
+### Lecture 6 - Image Classification
+
+#### Albert Au Yeung<br/>11th October, 2018
+
+---
+
+class: middle, center
+
+# Image Classification
+
+---
+
+# Image Classification
+
+* In **image classification**, the task is to categorize incoming images into one of the pre-defined classes/labels
+* It can be a **binary classification problem** or a **multi-class classification problem**
+* Example:
+    - Which of the following are images of a **star ferry**?<br/><br/>
+
+<center>
+    <img src="img/l6-image-classification-task-example.png" width="80%"/>
+</center>
+
+---
+
+class: equal-split
+
+# Image Classification
+
+* Some well-known image classification tasks:
+    - [MNIST Hand-written digits classification](http://yann.lecun.com/exdb/mnist/)
+    - [ImageNet Large Scale Visual Recognition Challenge](http://www.image-net.org/challenges/LSVRC/)
+
+.column-left[
+<center>
+    <img src="img/l1-ml-mnist.png" width="100%"/>
+</center>
+]
+.column-right[
+<center>
+    <img src="img/l2-imagenet-classification.png" width="80%"/>
+</center>
+]
+
+---
+
+# Image Classification
+
+### Challenges
+
+1. **High dimensionality**
+    - Images are represented digitally as a matrix of **pixels**
+    - If we use **RGB** to represent the colour of a pixel, a 300 x 300 image has 270,000 values
+2. **Representation**
+    - Representing an image using a feature vector of all the pixels is of little use
+    - The scale and perspective of the object inside an image can vary a lot
+3. **Noise**
+    - A picture of an object usually have something in the background
+    - An object may appear with another irrelevant object in the same image
+
+---
+
+class: split
+
+# What is an Image
+
+.column-left[
+* An image is represented digitally by **pixels** (picture elements)
+* Each pixel contains the values of the colour of the corresponding component of the image
+* Resolution refers to the **number of pixels** used to represent the image
+* The values of the pixels can represent the intensity of light, the RGB values, hue, saturation, brightness, etc.
+]
+.column-right[
+<center>
+    <img src="img/l6-example-image.png" width="80%"/>
+    <br/><br/>
+    An image with 48 x 48 pixels with RGB channels
+</center>
+]
+
+---
+
+# What is an Image
+
+<center>
+    <img src="img/l6-example-image-greyscale.png" width="30%"/>
+    <br/><br/>
+    A grey scale version of the previous image<br/>
+    Each pixel has a value between 0 and 255
+</center>
+
+---
+
+# What is an Image
+
+### RGB (Red, Green, Blue)
+
+* One of the most commonly used colour model
+* Each pixel is represented by **three integer values**, each of **8 bits (0 to 255)**
+* This allows 16,777,216 (256<sup>3</sup>) combinations for a pixel
+
+<center>
+    <img src="img/l6-rgb-example.png" width="40%"/>
+</center>
+
+---
+
+# Image Classification
+
+### Why is image classification difficult?
+
+* Semantics is **lost** in an image represented as a matrix of pixels
+* We need to bridge the **gap between pixels and meanings**
+* What are the **features** that can be used to represent an image?
+
+<center>
+    <img src="img/l6-image-matrix.png" width="70%"/>
+</center>
+
+---
+
+# Representation and Feature Extraction
+
+* In order to perform computation on images, we need an **appropriate representation** of the images. 
+* Some **representations** are:
+    - Use the values of the **raw pixels**
+    - Use **keywords (metadata)** to describe an image, and thus an image can be represented as a bag of words
+    - Extract **visual features** from the image and use a vector of features to represent an image
+* Finding a **good representation** is hard!
+
+---
+
+# Image Features
+
+* A **feature** is a piece of information relevant for solving a certain computational task
+* In **computer vision**, features can be pixels, points, edges, shapes, or other more complex **visual structures**
+* **Feature detection** – the process of identifying features in an image that is representative of the image itself
+* Ref: https://en.wikipedia.org/wiki/Feature_detection_(computer_vision)
+
+---
+
+class: split
+
+# Feature Extraction
+
+.column-left[
+<center>
+    <img src="img/l6-edge-detection.png" width="80%"/><br/>
+    Edge Detection<br/>
+    <a href="https://en.wikipedia.org/wiki/Edge_detection">https://en.wikipedia.org/wiki/Edge_detection</a>
+    <br/><br/>
+    <img src="img/l6-blob-detection.png" width="45%"/><br/>
+    Blob Detection<br/>
+    <a href="http://www.ipb.uni-bonn.de/projects/etrims/results/blob-detection-Dateien">http://www.ipb.uni-bonn.de/projects/etrims/results/blob-detection-Dateien</a>
+</center>
+]
+.column-right[
+<center>
+    <img src="img/l6-corner-detection.png" width="90%"/>
+    <br/>
+    Corner Detection<br/>
+    <a href="https://dzone.com/articles/corner-detection-opencv">https://dzone.com/articles/corner-detection-opencv</a>
+</center>
+]
+
+---
+
+# SIFT
+
+* SIFT stands for **Scale-Invariant Feature Transform**
+* Published by **David Lowe** (now at Google) in 1999/2004
+* An algorithm for detecting and describing **local features** in images
+* One of the most widely used feature extraction algorithm in computer vision
+* Able to detect features when the **scales** and **rotations** are different
+* Ref: [Distinctive Image Features from Scale-Invariant Keypoints](https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf)
+
+---
+
+# SIFT
+
+## Problem Definition
+
+* What are the criteria of **good features**?
+    - Distinctive
+    - Easy to extract
+    - Invariant to noise, illumination ,scaling, rotation, viewing direction
+    - Easy to match against a large database of features
+
+---
+
+# SIFT
+
+* SIFT is an approach for detecting (determine what is a feature) and describing local features with the following steps:
+    1. Scale-space extrema detection
+    2. Keypoint localization
+    3. Orientation assignment
+    4. Generation of keypoint descriptors
+* Ref: [http://docs.opencv.org/trunk/da/df5/tutorial_py_sift_intro.html](http://docs.opencv.org/trunk/da/df5/tutorial_py_sift_intro.html )
+
+---
+
+class: split
+
+# SIFT
+
+.column-left[
+* **1. Scale-space extrema detection**
+    - Search for stable features across different scales
+    - An image is rescaled and smoothed by a Gaussian (blurring) filter
+    - Find out interesting points by selecting the local maxima or minima among different scales
+* **2. Keypoint localization**
+    - Remove points with low contrasts or edges (not necessary interesting features)
+]
+.column-right[
+<center>
+    <img src="img/l6-sift-step1.png" width="110%"/>
+</center>
+]
+
+---
+
+# SIFT
+
+* **3. Orientation assignment**
+    - Assign an orientation to each keypoint, so that the features detected are invariant to image rotation
+* **4. Generation of keypoint descriptors**
+    - A **16x16** neighbourhood around the keypoint is taken, and a histogram of orientations of the gradients are calculated
+    - Finally, each keypoint is represented by **a vector of length 128**
+
+<center>
+    <img src="img/l6-sift-step4.png" width="40%"/>
+</center>
+
+---
+
+class: split
+
+# SIFT in OpenCV
+
+.column-left[
+```python
+import cv2
+import numpy as np
+
+img = cv2.imread('star-ferry.jpg')
+gray= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+sift = cv2.xfeatures2d.SIFT_create()
+kp = sift.detect(gray,None)
+
+flag = cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS
+img = cv2.drawKeypoints(gray, kp, img, flags=flag)
+cv2.imwrite('keypoints.jpg', img)
+```
+]
+.column-right[
+<center>
+    <img src="img/l6-sift-opencv-demo1.png" width="90%"/>
+</center>
+]
+
+---
+
+# SIFT
+
+* Keypoints can be used to **match objects** across different images
+
+<center>
+    <img src="img/l6-sift-opencv-demo2.jpg" width="85%"/>
+</center>
+
+---
+
+# Visual Bag-of-Words
+
+* In text classification, a document can be represented by a **bag of words**
+* Similar approach can be used in image classification
+
+<center>
+    <img src="img/l6-visual-bag-of-words.png" width="70%"/>
+</center>
+
+* Ref: [http://www.mathworks.com/help/vision/ug/image-classification-with-bag-of-visual-words.html](http://www.mathworks.com/help/vision/ug/image-classification-with-bag-of-visual-words.html)
+
+---
+
+# Visual Bag-of-Words
+
+### Steps
+
+1. Extract **keypoints** from images using SIFT
+2. **Cluster** the keypoints to create a **visual dictionary** using a clustering algorithm (e.g. K-means)
+3. For a given image, check the cluster to which each keypoint is in, and create a **histogram** of the distribution of clusters
+4. Images are then represented by **vectors by normalizing the histograms**
+
+---
+
+# Visual Bag-of-Words
+
+<center>
+    <img src="img/l6-bag-of-visual-words-2.png" width="35%"/>
+</center>
+
+* Ref: [http://www.olivier-augereau.com/blog/?p=358](http://www.olivier-augereau.com/blog/?p=358)
+
+---
+
+# Limitations
+
+* SIFT aims at identifying interesting points automatically, but keypoints are still relatively **primitive** and are not usually good enough for **classification tasks**
+* The visual BoW approach does not consider **spatial relations** among visual words
+* SIFT cannot be easily adapted to **different domains** to extract distinct features, as it is not based on **machine learning**
+* SIFT is computationally expensive
+
+### We need better algorithms to extract image features!
+
+---
+
+class: center, middle
+
+# Deep Learning
+
+---
+
+class: center, middle
+
+# To Be Continued
+
+---
+
+class: center, middle
+
+# End of Lecture 6
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        ratio: '16:9',
+        
+        // Customize slide number label, either using a format string..
+        slideNumberFormat: '%current% / %total%',
+        
+        // Enable or disable counting of incremental slides in the slide counting
+        countIncrementalSlides: true,
+
+        highlightStyle: 'tomorrow',
+        });
+      // Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
