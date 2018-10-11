@@ -50,11 +50,15 @@
 - References:
     - [Google News Personalization: Scalable Online Collaborative Filtering](https://www2007.org/papers/paper570.pdf). Das et al., 2007.
     - [Amazon.com Recommendations: Item-to-Item Collaborative Filtering](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf). Linden et al., 2003.
+    - [Browsemap: Collaborative Filtering at LinkedIn](https://engineering.linkedin.com/recommender-systems/browsemap-collaborative-filtering-linkedin)
+    - [Building Large Scale Real World Recommender Systems (Netflix)](https://www.slideshare.net/xamat/building-largescale-realworld-recommender-systems-recsys2012-tutorial)
 
 ### Lecture 06 (11 Oct)
 
 - Image Classification
 - [Lecture slides](lectures/lecture-06.html), [PDF Version](lectures/pdfs/lecture-06.pdf)
+- References:
+    - [ImageNet](http://image-net.org/)
 
 ### Lecture 07 (18 Oct)
 
