@@ -57,13 +57,19 @@
 
 - Image Classification
 - [Lecture slides](lectures/lecture-06.html), [PDF Version](lectures/pdfs/lecture-06.pdf)
+- Notebooks:
+    - Testing ResNet pre-trained model in Keras: [l6_example_keras_resnet50.ipynb](https://github.com/iems5780/1819t1/blob/master/notebooks/l6_example_keras_resnet50.ipynb)
+    - Testing Inception V3 pre-trained model in PyTroch: [l6_example_pytorch_inceptionv3.ipynb](https://github.com/iems5780/1819t1/blob/master/notebooks/l6_example_pytorch_inceptionv3.ipynb)
 - References:
     - [ImageNet](http://image-net.org/)
 
 ### Lecture 07 (18 Oct)
 
 - Network Programming
-
+- [Lecture slides](lectures/lecture-07.html), [PDF Version](lectures/pdfs/lecture-07.pdf)
+- Sample Scripts:
+    - [TCP Server](https://github.com/iems5780/1819t1/blob/master/scripts/tcp_simple_server.py), [TCP Client](https://github.com/iems5780/1819t1/blob/master/scripts/tcp_simple_client.py)
+    - [UDP Server](https://github.com/iems5780/1819t1/blob/master/scripts/udp_simple_server.py), [UDP Client](https://github.com/iems5780/1819t1/blob/master/scripts/udp_simple_client.py)
 
 ### Lecture 08 (25 Oct)
 
