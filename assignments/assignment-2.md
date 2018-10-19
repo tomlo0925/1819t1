@@ -17,7 +17,7 @@ In this assignment, you will build an **image classifier** and then deploy the c
 
 You will build a system which offer image classification service via Telegram bot. A user in Telegram can either send **an image** or **the URL of an image** to the bot, and the bot will feed the image (download the image first if it is given a URL) into a deep learning model to generate image classification predictions, and then send back the result to the user.
 
-![System](assignment2-system.png)
+![System](assignment2-system.png | width=100%)
 
 The overall architecture of the system is shown in the diagram above. The details of each component will be described below.
 
