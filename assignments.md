@@ -20,7 +20,7 @@
 
 - Socket and Concurrent Programming
 - Due Date: 23:59, 09 Nov (Fri)
-- Instructions
+- [Instructions](assignments/assignment-2.md)
 
 ### Assignment 3
 
