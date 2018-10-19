@@ -138,11 +138,6 @@ Once the predictions are generated, the second thread should compose a dictionar
 
 This dictionary should be JSON-encoded, and then sent back to the client.
 
-## Example
-
-A sample system has been set up at .
-You can submit either a URL of an image, or directly send a photo to the bot. You will get back the top 5 predicted classes along with their probabilities.
-
 ## What to Submit
 
 You should prepare **two files** to be submitted for this assignment:
