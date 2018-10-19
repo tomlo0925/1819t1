@@ -12,3 +12,7 @@
 * Neural Networks
 * Slides: [tutorial-03.pdf](tutorials/tutorial-03.pdf)
 
+### Tutorial 4
+* Introduction to PyTorch
+* Slides: [tutorial-04.pdf](tutorials/tutorial-04.pdf)
+
