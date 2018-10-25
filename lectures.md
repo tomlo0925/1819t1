@@ -74,7 +74,7 @@
 ### Lecture 08 (25 Oct)
 
 - Concurrent Programming (1)
- [Lecture slides](lectures/lecture-08.html), [PDF Version](lectures/pdfs/lecture-08.pdf)
+- [Lecture slides](lectures/lecture-08.html), [PDF Version](lectures/pdfs/lecture-08.pdf)
 - Sample Scripts:
     - [Daemonic Threads](https://github.com/iems5780/1819t1/blob/master/scripts/multithreading/daemonic_threads.py)
     - [Multiprocess Server](https://github.com/iems5780/1819t1/blob/master/scripts/multithreading/multiprocess_pool_server.py)
