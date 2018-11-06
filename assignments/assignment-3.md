@@ -61,19 +61,49 @@ For this assignment, create a new Telegram bot, and use the `\setcommands` funct
     - An example is shown below
 
 <center>
-    <img src="assignment-3-rating.png" width="50%"/>
+    <img src="assignment-3-rating.png" width="45%"/>
 </center>
 
 * `/recommend`
     - A command to ask the application to recommend a list of movies based on previous ratings. On receiving this command, the Telegram bot script shoud:
         1. Send a request to the server's "Recommend API" to ask for the **top 3** recommended movies for this user.
-        2. Upone receiving the response from the server, format a message with the following information and send it to the user
-            - Title of the movie
-            - The URL to the movie's page on IMDB
+        2. The server may return two different responses, depending on the number of ratings given by that user:
+            - If the user has **10 or more** ratings, the server will return a list of recommended movies
+            - If the user has **less than 10** ratings, the server will return an empty list
+        3. Upone receiving the response from the server:
+            - If the list is not empty, send the list of movies to the user in **separate messages** to the user. Each message contains the title and the URL of the movie's page on IMDB.
+            - if the list is empty, send the following message to the user: **"You have not rated enough movies, we cannot generate recommendation for you"**.
 
 ### The Application Server
 
+The application server should be a **Flask application** that accepts **HTTP requests** on different routes.
 
+You should load **ALL** user ratings when initializing the application. For example, you can create a **dictionary** for storing the user's ratings. The key is the user's ID, and the value is a **numpy array** containing the user's rating on different movies.
+
+You may also have to load additional data in the application when it is started, such as the titles and IDs of the movies.
+
+**Hint**: You can add attributes to the Flask application when initializing it, and then in the function of a route you can use `current_app` to get a reference to the application (see example below).
+
+```python
+from flask import Flask, current_app
+
+app = Flask(__name__)
+
+# Store something in the "data" attribute
+# of the Flask application
+app.data = "Some data"
+
+@app.route('/')
+def index():
+    # Returns "Some data"
+    return current_app.data
+```
+
+Your Flask application should have the following **routes**:
+
+- 
+
+**Note:** We DO NOT use a database in this assignment. Hence, if you restart the application, all the users' ratings will be gone (except, of course, the ratings from the MovieLens dataset). To facilitate testing, you can consider adding ratings to your own Telegram user (check the "chat ID" of yourself) when the application starts.
 
 ## What to Submit
 
