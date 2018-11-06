@@ -90,10 +90,14 @@
 
 ### Lecture 10 (08 Nov)
 - Web Server and Applications
-
+- [Lecture slides](lectures/lecture-10.html), [PDF Version](lectures/pdfs/lecture-10.pdf)
+- Sample Scripts:
+    - [HTTP on TCP](https://github.com/iems5780/1819t1/blob/master/scripts/http/http_on_tcp.py)
+    - [HTTP using requests](https://github.com/iems5780/1819t1/blob/master/scripts/http/http_requests.py)
+    - [Hello World Web Application using Flask](https://github.com/iems5780/1819t1/blob/master/scripts/http/flask_hello_word.py)
+    - [Query String and JSON Response in Flask](https://github.com/iems5780/1819t1/blob/master/scripts/http/flask_data_format.py)
 
 ### <strike>(15 Nov) (Graduation Ceremony)</strike>
-
 
 ### Lecture 11 (22 Nov)
 
