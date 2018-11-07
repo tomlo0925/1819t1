@@ -7,20 +7,20 @@
 
 ## Objectives
 
-* To get familiar with building HTTP applications
-* To get familiar with creating a Flask application in Python
-* To get familiar with different basic concepts in recommender systems
+* To get familiar with building **HTTP applications**
+* To get familiar with creating a **Flask application** in Python
+* To get familiar with different basic concepts in **recommender systems**
 
 ## Tasks
 
-In this assignment, you will build a movie recommender system using some memory-based recommendation algorithms. The system should be deployed as a Telegram bot and a Web application server.
+In this assignment, you will build a movie recommender system using some **memory-based recommendation algorithms**. The system should be deployed as a Telegram bot and a Web application server.
 
 Your recommender system should at least consists of two parts:
-1. A python script `bot.py` that continues to receive user messages from Telegram. When a message from a user is received, it sends request(s) to the recommendation server, and formats a response to be sent back to the user via Telegram.
-2. A python script `app.py` that implements an HTTP server using Flask. It should provide different routes to accept requests to different functions (see more details below).
+1. A python script **`bot.py`** that continues to receive user messages from Telegram. When a message from a user is received, it sends request(s) to the recommendation server, and formats a response to be sent back to the user via Telegram.
+2. A python script **`app.py`** that implements an HTTP server using Flask. It should provide different routes to accept requests to different functions (see more details below).
 
 The system should provide the following functions:
-1. Accepts a new user identified by the `chat_id`
+1. Accepts a new user identified by the **`chat_id`**
 2. Returns a movie that has not yet been rated by a user so that the user can provide his/her rating on the movie
 3. If enough ratings have been collected from a user, use the **user-based collaborative filtering** algorithm to generate recommended movies to the user
 
@@ -32,10 +32,10 @@ More details about how the system should be implemented are described below.
 
 ### Dataset
 
-We will use a dataset commonly used in recommender systems research, the MovieLens 100K movie ratings dataset created by GroupLens at the University of Minnesota. Check the Website [https://grouplens.org/datasets/movielens/](https://grouplens.org/datasets/movielens/), and read the section "recommended for education and development". We will use the **small** dataset with 100,000 ratings.
+We will use a dataset commonly used in recommender systems research, the **MovieLens 100K movie ratings dataset** created by GroupLens at the University of Minnesota. Check the Website [https://grouplens.org/datasets/movielens/](https://grouplens.org/datasets/movielens/), and read the section "recommended for education and development". We will use the **small** dataset with 100,000 ratings.
 
 The dataset consists of 100,000 ratings on different movies by the users of the MovieLens recommender system:
-- 100,000 ratings (1-5) from 600 users on 9,000 movies
+- 100,000 ratings (1-5) from **600 users** on **9,000 movies**
 - Each user has at least 20 movies
 - Data about the movies and the users
 
@@ -43,7 +43,7 @@ You can read the README file here: [http://files.grouplens.org/datasets/movielen
 
 ### The Telegram Bot Script
 
-The Telegram bot script `bot.py` is used to rely user input to the server, and the server's output back to the user. In this assignment, you do NOT have to use a separate thread to communicate with the server. You can handler messages **sequentially** (i.e. one after another).
+The Telegram bot script `bot.py` is used to rely user input to the server, and the server's output back to the user. In this assignment, you **do NOT** have to use a separate thread to communicate with the server. You can handler messages **sequentially** (i.e. one after another).
 
 For this assignment, create a new Telegram bot, and use the `\setcommands` function in the BotFather bot to create **three commands** for your bot (see [https://core.telegram.org/bots#6-botfather](https://core.telegram.org/bots#6-botfather)). The user can use these three commands to interact with your recommender system.
 
@@ -115,6 +115,7 @@ Your Flask application should have the following **routes**:
     - An API for obtaining a movie that is **NOT yet** rated by the user
     - It receives JSON data in the form of<br/>`{"chat_id": "(chat ID of the telegram user)"}`
     - The function handling this API should randomly sample a movie that is not yet rated by the user, and return the movie ID, the title and the URL to the movie's page on IMDB in the following format:<br/>`{"id": 1, "title": "Toy Story (1995)", "url": "..."}`
+    - Note that you may need to **generate the URL** of the movie's page using the movie's ID in the dataset
 * `/rate_movie`
     - An API for submitting a movie rating form a user
     - The function handling this API should updating the array of movie ratings of the given user with the rating provided
