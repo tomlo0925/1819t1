@@ -49,15 +49,16 @@ For this assignment, create a new Telegram bot, and use the `\setcommands` funct
 
 * `/start`
     - A command to register with the application. On receiving this command, the Telegram bot script should:
-        1. Send a request to the server's "Start API" with the user's `chat_id`, to check whether the user is a new user or an existing user
-        2. If user is new, reply "Welcome!", else reply "Welcome back!"
+        1. Send a request to the server's `/register` API with the user's `chat_id`, to check whether the user is a new user or an existing user
+        2. If user is new, reply "Welcome!", otherwise reply "Welcome back!"
 * `/rate`
     - A command to ask the application to present a movie for rating. On reciving this command, the Telegram bot script should:
-        1. Send a request to the server's "Rate API" with the user's `chat_id`
+        1. Send a request to the server's `/get_unrated_movie` API with the user's `chat_id`
         2. On receiving the movie information from the server, send the user two messages:
             - A message containing the name of the movie, and the URL to the movie's page on IMDB
             - A message asking for the user's rating on this movie, with a custom keyboard
     - Note that you should store the movie's ID in the callback data, such that you know which movie the user has rated when you receive the user's rating
+    - When a movie rating is received, you should send a request to the server's `/rate` API to submit the rating
     - An example is shown below
 
 <center>
@@ -66,7 +67,7 @@ For this assignment, create a new Telegram bot, and use the `\setcommands` funct
 
 * `/recommend`
     - A command to ask the application to recommend a list of movies based on previous ratings. On receiving this command, the Telegram bot script shoud:
-        1. Send a request to the server's "Recommend API" to ask for the **top 3** recommended movies for this user.
+        1. Send a request to the server's `/recommend` API to ask for the **top 3** recommended movies for this user.
         2. The server may return two different responses, depending on the number of ratings given by that user:
             - If the user has **10 or more** ratings, the server will return a list of recommended movies
             - If the user has **less than 10** ratings, the server will return an empty list
@@ -99,9 +100,48 @@ def index():
     return current_app.data
 ```
 
+All the **routes** in your Flask application should receive **POST** requests with **JSON data**. They should also send out responses in **JSON format**.
+
 Your Flask application should have the following **routes**:
 
-- 
+* `/register`
+    - An API for checking whether a user exists in the application
+    - It receives JSON data in the form of<br/>`{"chat_id": "(chat ID of the telegram user)"}`
+    - If the application has seen this chat ID before, the following JSON response:<br/>`{"exists": 1}`
+    - If the application has not seen this chat ID before:
+        - Creates a new user and initialize its item ratings to zeros
+        - Return the following JSON response:<br/>`{"exists": 0}`
+* `/get_unrated_movie`
+    - An API for obtaining a movie that is **NOT yet** rated by the user
+    - It receives JSON data in the form of<br/>`{"chat_id": "(chat ID of the telegram user)"}`
+    - The function handling this API should randomly sample a movie that is not yet rated by the user, and return the movie ID, the title and the URL to the movie's page on IMDB in the following format:<br/>`{"id": 1, "title": "Toy Story (1995)", "url": "..."}`
+* `/rate_movie`
+    - An API for submitting a movie rating form a user
+    - The function handling this API should updating the array of movie ratings of the given user with the rating provided
+    - It should accept JSON data in the following format:<br/>`{"chat_id": "...", "movie_id": 1, "rating": 5}`
+    - On updating the data in the application, it should return the following JSON response:<br/>`{"status": "success"}`
+* `/recommend`
+    - An API for generating recommended movies for a given user
+    - The function handling this API should use the **user-based collaborative filtering** approach to compute the predicted ratings of all movies, and return the **top N** movies as specified in the request JSON
+    - **Note**: the API should return an **empty list** if the number of movies rated by the user is **less than 10**
+    - The API expects the following JSON input data:<br/>`{"chat_id": "...", "top_n": 3}`
+    - It should return the list of movies in the following format:
+
+```javascript
+{
+    "movies": [
+        {
+            "title": "...",
+            "url": "..."
+        },
+        {
+            "title": "...",
+            "url": "..."
+        },
+        ...
+    ]
+}
+```
 
 **Note:** We DO NOT use a database in this assignment. Hence, if you restart the application, all the users' ratings will be gone (except, of course, the ratings from the MovieLens dataset). To facilitate testing, you can consider adding ratings to your own Telegram user (check the "chat ID" of yourself) when the application starts.
 

@@ -24,9 +24,9 @@
 
 ### Assignment 3
 
-- Web Application + MongoDB
+- Movie Recommender System
 - Due Date: 23:59, 30 Nov (Fri)
-- Instructions
+- [Instructions](assignments/assignment-3.md)
 
 ### Assignment 4
 
