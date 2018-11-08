@@ -12,26 +12,39 @@ The machine learning task does not have to be a very complicated one. The focus 
 
 Your system should be implemented using **Python 3.6**. You are free to use any open source packages or libraries in your project.
 
-## Requirements
+# Requirements
 
-Your project will be assessed using the criteria listed below:
+Your project should implement the following kinds of features/functions:
 
-* **20% - Machine learning functions**
-    - You can collect data and train a model for the task
+* **Machine Learning**
+    - Your application should be powered by a machine learning model
+    - You can collect data and train a model for the task all by yourself
     - You can also use existing pre-trained models available on the Internet, or even packages that implement specific machine learning applications
-    - You should provide functions in addition to simply applying the model to the user's input
-* **20% - Network programming**
+    - You should provide functions in addition to simply applying the model to the user's input, such as allowing the user to retrieve the most recent predictions, or configure some settings to choose different models
+* **Network programming**
     - Using socket programming, HTTP, or asynchronous messaging to implement clients and servers
-* **20% - Concurrent programming**
+* **Concurrent programming**
     - Using multi-threading, multi-processing or asyncio to achieve concurrent execution of tasks
-* **20% - System design**
+* **System design**
     - Consider which part(s) of the system is the bottleneck
     - Design your system in such a way that it allows horizontal scaling
     - Your system should be able to support multiple concurrent users
-* **10% - Robustness**
-    - This measures how well your system handle errors or exceptions
-* **10% - User Interface**
+    - Use either asynchronous message queues, pub/sub systems, or caches to increase the throughput and scalability of your system
+* **Robustness**
+    - You should prevent the application from crashing by validating inputs and catch possible exceptions wherever necessary
+* **User Interface**
     - You can use Telegram as your frontend (recommended), or you can develop your own interface using Python, or create a Web-based application
+
+## Assessment Scheme
+
+Your project will be assessed using the criteria listed below:
+
+* **20% - Machine learning**
+* **20% - Network programming**
+* **20% - Concurrent programming**
+* **20% - System design and complexity**
+* **10% - Robustness**
+* **10% - User Interface**
 
 ## Suggested Topics
 
