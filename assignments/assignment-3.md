@@ -75,6 +75,8 @@ For this assignment, create a new Telegram bot, and use the `\setcommands` funct
             - If the list is not empty, send the list of movies to the user in **separate messages** to the user. Each message contains the title and the URL of the movie's page on IMDB.
             - if the list is empty, send the following message to the user: **"You have not rated enough movies, we cannot generate recommendation for you"**.
 
+**Hint**: You can refer to the [sample bot script](https://github.com/iems5780/1819t1/blob/master/assignments/assignment-3-sample-bot.py) to see how you can structure your handle function to handle commands from the users.
+
 ### The Application Server
 
 The application server should be a **Flask application** that accepts **HTTP requests** on different routes.
