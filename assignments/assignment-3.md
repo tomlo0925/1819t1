@@ -41,6 +41,8 @@ The dataset consists of 100,000 ratings on different movies by the users of the 
 
 You can read the README file here: [http://files.grouplens.org/datasets/movielens/ml-latest-small-README.html](http://files.grouplens.org/datasets/movielens/ml-latest-small-README.html)
 
+**NOTE**: The original dataset may be too large for this assignment. If it takes a long time to compute predictions, you can use a smaller dataset available here: [https://github.com/iems5780/1819t1/blob/master/assignments/ratings.small.csv](https://github.com/iems5780/1819t1/blob/master/assignments/ratings.small.csv). This dataset is created by filtering away movies with less than 20 ratings, and users with less than 50 ratings. This dataset has ratings from 330 users on 1,235 movies.
+
 ### The Telegram Bot Script
 
 The Telegram bot script `bot.py` is used to rely user input to the server, and the server's output back to the user. In this assignment, you **do NOT** have to use a separate thread to communicate with the server. You can handler messages **sequentially** (i.e. one after another).
