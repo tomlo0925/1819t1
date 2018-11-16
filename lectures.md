@@ -102,7 +102,10 @@
 ### Lecture 11 (22 Nov)
 
 - Asynchronous Tasks and Message Queues
-
+- [Lecture slides](lectures/lecture-11.html), [PDF Version](lectures/pdfs/lecture-11.pdf)
+- Sample Scripts:
+    - Redis [Publisher](https://github.com/iems5780/1819t1/blob/master/scripts/redis/redis_pub.py), [Subscriber](https://github.com/iems5780/1819t1/blob/master/scripts/redis/redis_sub.py)
+    - Celery [Task](https://github.com/iems5780/1819t1/blob/master/scripts/celery/task.py), [App](https://github.com/iems5780/1819t1/blob/master/scripts/celery/app.py)
 
 ### Lecture 12 (29 Nov)
 

@@ -16,3 +16,10 @@
 * Introduction to PyTorch
 * Slides: [tutorial-04.pdf](tutorials/tutorial-04.pdf)
 
+### Tutorial 5
+* Thread and Queue
+* Slides: [tutorial-05.pdf](tutorials/tutorial-05.pdf)
+
+### Tutorial 6
+* TCP Server/Client
+* Slides: [tutorial-06.pdf](tutorials/tutorial-06.pdf)
