@@ -1,11 +1,21 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
+    print(request.args.get("key"))
     return 'Hello World!'
+
+@app.route('/get_json')
+def get_json():
+    return jsonify(message="Hello world")
+
+@app.route('/user/<username>')
+def show_user_profile(username):
+    message = "Hello {}!".format(username)
+    return message
 
 
 if __name__ == '__main__':
