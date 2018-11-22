@@ -2,7 +2,7 @@
 
 ## Movie Recommender System
 
-* **Deadline**: 30th November, 2018 (Friday)
+* **Deadline**: 2nd December, 2018 (Sunday)
 * **Total Marks**: 100
 
 ## Objectives

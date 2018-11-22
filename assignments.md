@@ -18,18 +18,18 @@
 
 ### Assignment 2
 
-- Socket and Concurrent Programming
+- **Socket and Concurrent Programming**
 - Due Date: 23:59, 09 Nov (Fri)
 - [Instructions](assignments/assignment-2.md)
 
 ### Assignment 3
 
-- Movie Recommender System
-- Due Date: 23:59, 30 Nov (Fri)
+- **Movie Recommender System**
+- Due Date: 23:59, 2 Dec (Sun)
 - [Instructions](assignments/assignment-3.md)
 
 ### Assignment 4
 
-- Using Kafka and Redis
+- **Asychronous Messaging**
 - Due Date: 23:59, 21 Dec (Fri)
 - Intstructions
